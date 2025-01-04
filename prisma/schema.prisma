@@ -19,3 +19,13 @@ model Session {
   data       String
   expiresAt  DateTime
 }
+
+//users model do
+model User {
+  id        String   @id @default(uuid()) // Unique identifier
+  email     String   @unique             // Unique email for each user
+  password  String                        // Password (hashed)
+  createdAt DateTime @default(now())      // Timestamp when the user is created
+  updatedAt DateTime @updatedAt           // Timestamp when the user is last updated
+}
+

@@ -1,10 +1,9 @@
-"set up express, authentication ecc";
 const express = require("express");
 const passport = require("passport");
-// const authRoutes = require("./auth");
-// const routes = require("./routes");
+const routes = require("./src/routes/routes");
+const path = require("path");
 
-//session
+// Session and Prisma
 const session = require("express-session");
 const PrismaSessionStore =
   require("@quixo3/prisma-session-store").PrismaSessionStore;
@@ -12,8 +11,12 @@ const { PrismaClient } = require("@prisma/client");
 
 require("dotenv").config();
 
-const app = express();
+const app = express(); // Declare app before using it
 const prisma = new PrismaClient();
+
+// Set the view engine to 'ejs'
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 // Middleware
 app.use(express.json());
@@ -30,9 +33,12 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
+app.use(passport.initialize());
+app.use(passport.session());
 
+// Routes
+app.use(routes);
+
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
