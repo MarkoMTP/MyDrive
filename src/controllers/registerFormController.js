@@ -1,10 +1,14 @@
 const bycrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
 const { findUserEmail, addUserToDb } = require("../db/queries"); // Adjust the path to your queries file
 
 const registerController = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   // check if email is already registered
   try {
     const result = await findUserEmail(email);
