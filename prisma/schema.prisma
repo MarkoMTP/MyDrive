@@ -27,5 +27,7 @@ model User {
   password  String                        // Password (hashed)
   createdAt DateTime @default(now())      // Timestamp when the user is created
   updatedAt DateTime @updatedAt           // Timestamp when the user is last updated
+
+  @@map("user")  
 }
 
