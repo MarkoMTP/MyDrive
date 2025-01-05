@@ -3,10 +3,9 @@ const router = express.Router();
 const registerController = require("../controllers/registerFormController");
 const { registerValidator } = require("../middleware/validators");
 const passport = require("../authentication/passport");
+const { homepageController } = require("../controllers/homepageController");
 
-router.get("/", (req, res) => {
-  res.send("Hello");
-});
+router.get("/", homepageController);
 
 router.get("/register", (req, res) => {
   res.render("registerForm");

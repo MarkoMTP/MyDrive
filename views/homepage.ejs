@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f4f4f9;
+      }
+      .nav-links {
+        margin-top: 20px;
+      }
+      .nav-links a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #007bff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .file-placeholder {
+        margin-top: 40px;
+        padding: 20px;
+        border: 2px dashed #ccc;
+        background-color: #fff;
+        text-align: center;
+        width: 80%;
+        max-width: 600px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <% if (user) { %>
+    <h1>Welcome, <%= user.email %>!</h1>
+    <div class="nav-links">
+      <form action="/logout" method="POST" style="display: inline">
+        <button
+          type="submit"
+          style="
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: underline;
+          "
+        >
+          Logout
+        </button>
+      </form>
+    </div>
+    <% } else { %>
+    <div class="nav-links">
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    </div>
+    <% } %>
+    <div class="file-placeholder">
+      <p>File section coming soon!</p>
+    </div>
+  </body>
+</html>
