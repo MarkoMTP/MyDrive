@@ -3,9 +3,11 @@ const router = express.Router();
 const registerController = require("../controllers/registerFormController");
 const { registerValidator } = require("../middleware/validators");
 const passport = require("../authentication/passport");
-const { homepageController } = require("../controllers/homepageController");
+const { loginFormController } = require("../controllers/homepageController");
 
-router.get("/", homepageController);
+router.get("/", (req, res) => {
+  res.render("homepage");
+});
 
 router.get("/register", (req, res) => {
   res.render("registerForm");
@@ -22,9 +24,7 @@ router.post(
     failureRedirect: "/login", // Redirect to login form
     failureMessage: "Invalid email or password", // Add optional flash message
   }),
-  (req, res) => {
-    res.send("You are logged in!"); // Simplified response
-  }
+  loginFormController
 );
 
 router.post("/logout", function (req, res, next) {
@@ -35,4 +35,5 @@ router.post("/logout", function (req, res, next) {
     res.redirect("/");
   });
 });
+
 module.exports = router;
