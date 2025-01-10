@@ -3,7 +3,8 @@ const router = express.Router();
 const registerController = require("../controllers/registerFormController");
 const { registerValidator } = require("../middleware/validators");
 const passport = require("../authentication/passport");
-const { loginFormController } = require("../controllers/homepageController");
+const { loginFormController } = require("../controllers/loginController");
+const folderCreationController = require("../controllers/folderCreationController");
 
 router.get("/", (req, res) => {
   res.render("homepage");
@@ -22,10 +23,12 @@ router.post(
   "/login",
   passport.authenticate("user-login", {
     failureRedirect: "/login", // Redirect to login form
-    failureMessage: "Invalid email or password", // Add optional flash message
-  }),
-  loginFormController
+    failureMessage: "Invalid email or password",
+    successRedirect: "userPage",
+  })
 );
+
+router.get("/userPage", loginFormController);
 
 router.post("/logout", function (req, res, next) {
   req.logout(function (err) {
@@ -36,4 +39,9 @@ router.post("/logout", function (req, res, next) {
   });
 });
 
+router.get("/createFolder", (req, res) => {
+  res.render("createFolderForm");
+});
+
+router.post("/createFolder", folderCreationController);
 module.exports = router;

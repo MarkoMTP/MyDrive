@@ -27,7 +27,36 @@ model User {
   password  String                        // Password (hashed)
   createdAt DateTime @default(now())      // Timestamp when the user is created
   updatedAt DateTime @updatedAt           // Timestamp when the user is last updated
+  folders   Folder[] // Relation to folders
+  files     File[]  
+
 
   @@map("user")  
 }
 
+
+model Folder {
+  id        Int      @id @default(autoincrement())
+  name      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String      // Foreign key to User
+  parentId  Int?     // For nested folders; nullable if it's a root folder
+  parent    Folder?  @relation("Subfolders", fields: [parentId], references: [id])
+  subfolders Folder[] @relation("Subfolders") // Recursive relation for nested folders
+  files     File[]   // Relation to files in this folder
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  filename  String   // Original file name
+  path      String   // Path to the file on disk
+  size      Int      // File size in bytes
+  folder    Folder   @relation(fields: [folderId], references: [id])
+  folderId  Int      // Foreign key to Folder
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String      // Foreign key to User (optional but recommended for security)
+  uploadedAt DateTime @default(now())
+}
