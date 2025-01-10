@@ -1,6 +1,8 @@
 const bycrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
-const { findUserEmail, addUserToDb } = require("../db/queries"); // Adjust the path to your queries file
+const { findUserEmail, addUserToDb, addFolderToDb } = require("../db/queries"); // Adjust the path to your queries file
+const fs = require("fs");
+const path = require("path");
 
 const registerController = async (req, res) => {
   const { email, password } = req.body;
@@ -19,7 +21,20 @@ const registerController = async (req, res) => {
     //hash the password and add to db
     const hashedPassword = await bycrypt.hash(password, 10);
     await addUserToDb(email, hashedPassword);
-    res.redirect("/");
+    const user = await findUserEmail(email);
+
+    const userDirPath = path.join(__dirname, "../uploads", user.id);
+    try {
+      if (!fs.existsSync(userDirPath)) {
+        fs.mkdirSync(userDirPath, { recursive: true }); // Ensure the directory exists
+        await addFolderToDb(user.id, user.id); // Add root folder to DB with parentId null
+      }
+    } catch (fsError) {
+      console.error("Error creating user directory:", fsError);
+      return res.status(500).send("Error creating user folder.");
+    }
+
+    res.redirect("/login");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error registrating user");

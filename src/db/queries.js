@@ -19,7 +19,17 @@ const findUserEmail = async function (email) {
   return result;
 };
 
+const addFolderToDb = async function (folderName, userId) {
+  await prisma.folder.create({
+    data: {
+      name: folderName,
+      userId: userId,
+    },
+  });
+};
+
 module.exports = {
   addUserToDb,
   findUserEmail,
+  addFolderToDb,
 };
