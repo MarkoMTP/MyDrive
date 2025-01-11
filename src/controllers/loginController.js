@@ -1,9 +1,11 @@
-const { getAllUserFolders } = require("../db/queries");
+const { getAllUserFolders, firstFolder } = require("../db/queries");
 
 const loginFormController = async (req, res) => {
   const user = req.user;
-  const folders = await getAllUserFolders(user.id);
+  const firstFolder1 = await firstFolder(user.id);
 
+  const folders = await getAllUserFolders(firstFolder1.id, user.id);
+  console.log(folders);
   try {
     res.render("userPage", {
       user: req.user,
