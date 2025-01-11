@@ -7,7 +7,9 @@ const deleteFolderController = async (req, res) => {
   const folderIdString = Number(folderId);
   const user = req.user;
 
-  const dir = path.join(__dirname, `../uploads/${user.email}`, folderName);
+  const UPLOAD_DIR = path.join(__dirname, `../uploads/${user.email}`);
+
+  const dir = path.join(UPLOAD_DIR, folderName);
 
   if (fs.existsSync(dir)) {
     fs.rmdir(dir, (err) => {
