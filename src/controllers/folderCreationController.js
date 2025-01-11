@@ -3,7 +3,7 @@ const path = require("path");
 const { addFolderToDb } = require("../db/queries");
 
 const folderCreationController = async (req, res) => {
-  const folderName = req.body.folderName;
+  const { folderName } = req.body;
   const user = req.user;
   const userDirPath = path.join(
     __dirname,
