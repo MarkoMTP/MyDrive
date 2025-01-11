@@ -115,14 +115,36 @@
         <h2>Logged in as: <%= user.email %></h2>
         <h3>Folders</h3>
         <div class="folder-list">
-          <% if(folders) { %> <% folders.forEach((folder) => { %>
-          <div class="folder-item" onclick="openFolder('<%= folder.id %>')">
-            <h3><%= folder.name %></h3>
-          </div>
-          <% }) %> <% } else { %>
-          <p>No folders available.</p>
+          <% if (folders && folders.length > 0) { %>
+            <% folders.forEach((folder) => { %>
+              <div class="folder-item">
+                <h3 onclick="openFolder('<%= folder.id %>')"><%= folder.name %></h3>
+                <form
+                  action="/deleteFolder"
+                  method="post"
+                  onsubmit="return confirm('Are you sure you want to delete this folder?')"
+                >
+                  <!-- Hidden input to send folder name -->
+                  <input
+                    type="hidden"
+                    name="folderName"
+                    value="<%= folder.name %>"
+                  />
+                  <input
+                 type="hidden"
+                 name="folderId"
+              value="<%= folder.id %>"
+                      />
+                  <button type="submit">Delete</button>
+                </form>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <p>No folders found</p>
           <% } %>
         </div>
+      </div>
+      
 
         <!-- Create Folder Form -->
         <div class="create-folder">
