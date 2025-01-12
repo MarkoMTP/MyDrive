@@ -5,6 +5,11 @@ const { registerValidator } = require("../middleware/validators");
 const passport = require("../authentication/passport");
 const { loginFormController } = require("../controllers/loginController");
 const folderCreationController = require("../controllers/folderCreationController");
+const {
+  deleteFolderController,
+} = require("../controllers/deleteFolderController");
+const { getAllUserFolders, findSpecificFolder } = require("../db/queries");
+const viewFormController = require("../controllers/viewFormController");
 
 router.get("/", (req, res) => {
   res.render("homepage");
@@ -44,4 +49,8 @@ router.get("/createFolder", (req, res) => {
 });
 
 router.post("/createFolder", folderCreationController);
+
+router.post("/deleteFolder", deleteFolderController);
+
+router.get("/userPage/:userId/:folderName", viewFormController);
 module.exports = router;
