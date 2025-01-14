@@ -55,6 +55,59 @@ const deleteFolder = async function (folderName, folderId) {
   });
 };
 
+const findSpecificFolder = async function (userId, folderName) {
+  const result = await prisma.folder.findFirst({
+    where: {
+      userId: userId,
+      name: folderName,
+    },
+  });
+  return result;
+};
+
+const addNewFileToDir = async function (
+  filename,
+  size,
+  folderId,
+  userId,
+  path
+) {
+  await prisma.file.create({
+    data: {
+      filename: filename,
+      size: size,
+      userId: userId,
+      folderId: folderId,
+      path: path,
+    },
+  });
+};
+
+const getAllFilesFromFolder = async function (folderId) {
+  const result = await prisma.file.findMany({
+    where: {
+      folderId: folderId,
+    },
+  });
+  return result;
+};
+
+const findFile = async function (fileId) {
+  const result = await prisma.file.findFirst({
+    where: {
+      id: fileId, // Correct syntax: use a where clause
+    },
+  });
+  return result;
+};
+
+const findUserEmailWithId = async function (id) {
+  const result = await prisma.user.findFirst({
+    where: { id: id },
+  });
+  return result;
+};
+
 module.exports = {
   addUserToDb,
   findUserEmail,
@@ -62,4 +115,9 @@ module.exports = {
   getAllUserFolders,
   deleteFolder,
   firstFolder,
+  findSpecificFolder,
+  addNewFileToDir,
+  getAllFilesFromFolder,
+  findFile,
+  findUserEmailWithId,
 };

@@ -79,6 +79,18 @@
 .delete-btn:hover {
   background-color: #c0392b;
 }
+.viewBtn {
+  background-color: #1499ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.viewBtn:hover {
+  background-color: #044fa0;
+}
 
 /* Create Folder Form */
 .create-folder {
