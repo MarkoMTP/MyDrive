@@ -14,6 +14,7 @@ const {
   deleteFolderController,
 } = require("../controllers/deleteFolderController");
 const { findFile, findUserEmailWithId } = require("../db/queries");
+const { deleteFileController } = require("../controllers/deleteFileController");
 
 router.get("/", (req, res) => {
   res.render("homepage");
@@ -104,5 +105,7 @@ router.get(
 router.get("/folderDeleteError", (req, res) => {
   res.render("folderDeleteError");
 });
+
+router.post("/deleteFile", deleteFileController);
 
 module.exports = router;

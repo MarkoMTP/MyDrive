@@ -108,6 +108,12 @@ const findUserEmailWithId = async function (id) {
   return result;
 };
 
+const deleteFileFromDb = async function (fileId) {
+  await prisma.file.delete({
+    where: { id: fileId },
+  });
+};
+
 module.exports = {
   addUserToDb,
   findUserEmail,
@@ -120,4 +126,5 @@ module.exports = {
   getAllFilesFromFolder,
   findFile,
   findUserEmailWithId,
+  deleteFileFromDb,
 };

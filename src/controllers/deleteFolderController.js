@@ -1,41 +1,47 @@
 const fs = require("node:fs");
 const path = require("path");
 const { deleteFolder, getAllFilesFromFolder } = require("../db/queries");
+const { promisify } = require("util");
+
+// Promisify fs.rmdir for cleaner async handling
+const rmdirAsync = promisify(fs.rmdir);
 
 const deleteFolderController = async (req, res) => {
-  const { folderName, folderId } = req.body;
-  const folderIdString = Number(folderId);
-  const user = req.user;
-  const files = await getAllFilesFromFolder(folderIdString);
-  if (files && files.length > 0) {
-    return res.redirect("/folderDeleteError");
-  }
+  try {
+    const { folderName, folderId } = req.body;
+    const folderIdString = Number(folderId);
+    const user = req.user;
 
-  const UPLOAD_DIR = path.join(__dirname, `../uploads/${user.email}`);
+    // Get files from the folder
+    const files = await getAllFilesFromFolder(folderIdString);
+    if (files && files.length > 0) {
+      return res.redirect("/folderDeleteError");
+    }
 
-  const dir = path.join(UPLOAD_DIR, folderName);
+    const UPLOAD_DIR = path.join(__dirname, `../uploads/${user.email}`);
+    const dir = path.join(UPLOAD_DIR, folderName);
 
-  if (fs.existsSync(dir)) {
-    fs.rmdir(dir, (err) => {
-      if (err) {
+    // Check if the directory exists and delete it
+    if (fs.existsSync(dir)) {
+      try {
+        await rmdirAsync(dir); // Use promisified rmdir
+        console.log(`${dir} is deleted!`);
+      } catch (err) {
         console.error("Error deleting folder:", err);
         return res
           .status(500)
           .send("Failed to delete folder from file system.");
       }
-      console.log(`${dir} is deleted!`);
-    });
-  } else {
-    console.warn(`Folder "${dir}" does not exist.`);
-  }
+    } else {
+      console.warn(`Folder "${dir}" does not exist.`);
+    }
 
-  // Proceed with deleting the folder from the database
-  try {
-    await deleteFolder(folderName, folderIdString); // Make sure `deleteFolder` uses the correct field name
+    // Proceed with deleting the folder from the database
+    await deleteFolder(folderName, folderIdString);
     res.redirect("/userPage");
   } catch (error) {
-    console.error("Error deleting folder from database:", error);
-    res.status(500).send("Failed to delete folder from database.");
+    console.error("Error in deleteFolderController:", error);
+    res.status(500).send("An error occurred while deleting the folder.");
   }
 };
 
