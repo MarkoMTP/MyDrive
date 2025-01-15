@@ -4,25 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Folder</title>
+    <link rel="stylesheet" href="/css/folderInterFace.css" />
   </head>
-  <body>
+  <body class="body-container">
     <% if (folder && userId && files) { %>
-    <h1><%= folder.name %></h1>
-    <form
-      action="/userPage/<%= userId %>/<%= folder.name %>"
-      method="post"
-      enctype="multipart/form-data"
-    >
-      <input type="file" name="file" />
-      <button type="submit">Upload</button>
-    </form>
+    <div class="folder-container">
+      <h1 class="folder-title"><%= folder.name %></h1>
+      <form
+        action="/userPage/<%= userId %>/<%= folder.name %>"
+        method="post"
+        enctype="multipart/form-data"
+        class="upload-form"
+      >
+        <input type="file" name="file" class="file-input" />
+        <button type="submit" class="upload-button">Upload</button>
+      </form>
 
-    <% files.forEach(file => {%>
-    <a href="/userPage/<%= userId %>/<%= folder.name %>/<%= file.id%>"
-      ><%= file.filename%></a
-    >
-    <% });} else { %>
-    <h1>Folder not found</h1>
+      <div class="files-list">
+        <% files.forEach(file => {%>
+        <a
+          href="/userPage/<%= userId %>/<%= folder.name %>/<%= file.id%>"
+          class="file-link"
+          ><%= file.filename %></a
+        >
+        <% }); %>
+      </div>
+      <a href="/userPage" class="back-button">Go Back</a>
+    </div>
+    <% } else { %>
+    <div class="error-container">
+      <h1 class="error-message">Folder not found</h1>
+      <a href="/userPage" class="back-button">Go Back</a>
+    </div>
     <% } %>
   </body>
 </html>

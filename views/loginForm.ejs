@@ -4,37 +4,124 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <style>
+      /* General body styles */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+
+        color: #000000; /* Black text */
+      }
+
+      /* Login container styles */
+      .login-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      /* Header styles */
+      h1 {
+        font-size: 2.5rem;
+        margin: 0 0 20px 0;
+        color: #333;
+      }
+
+      /* Form input styles */
+      .form-label {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        text-align: left;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background: #fff;
+        color: #000;
+      }
+
+      /* Submit button styles */
+      .btn-primary {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff; /* Blue color */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      /* Media query for responsiveness */
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2rem;
+        }
+        .form-label {
+          font-size: 1rem;
+        }
+        .form-control {
+          font-size: 0.9rem;
+        }
+        .btn-primary {
+          font-size: 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Login</h1>
-    <form action="/login" method="POST" class="loginForm">
-      <!-- Email Field -->
-      <div class="mb-3">
-        <label for="email" class="form-label">Email Address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-          required
-        />
-      </div>
+    <div class="login-container">
+      <h1>Login</h1>
+      <form action="/login" method="POST" class="loginForm">
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
 
-      <!-- Password Field -->
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="password"
-          name="password"
-          placeholder="Enter your password"
-          required
-        />
-      </div>
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
 
-      <button type="submit" class="btn btn-primary w-100">Login</button>
-    </form>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+    </div>
   </body>
 </html>

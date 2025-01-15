@@ -1,11 +1,15 @@
 const fs = require("node:fs");
 const path = require("path");
-const { deleteFolder } = require("../db/queries");
+const { deleteFolder, getAllFilesFromFolder } = require("../db/queries");
 
 const deleteFolderController = async (req, res) => {
   const { folderName, folderId } = req.body;
   const folderIdString = Number(folderId);
   const user = req.user;
+  const files = await getAllFilesFromFolder(folderIdString);
+  if (files && files.length > 0) {
+    return res.redirect("/folderDeleteError");
+  }
 
   const UPLOAD_DIR = path.join(__dirname, `../uploads/${user.email}`);
 

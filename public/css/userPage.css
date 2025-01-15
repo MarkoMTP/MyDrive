@@ -156,6 +156,21 @@
   background-color: #27ae60;
 }
 
+.back-button {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #fff;
+  background-color: #6c757d;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+
 /* Media Query for Smaller Screens */
 @media (max-width: 768px) {
   .container {

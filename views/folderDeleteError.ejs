@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .error-container {
+        text-align: center;
+        background-color: #f5c6cb;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #721c24;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #501619;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <h1>Error</h1>
+      <p>The folder cannot be deleted while there are files inside.</p>
+      <a href="/userPage">Return to Home</a>
+    </div>
+  </body>
+</html>

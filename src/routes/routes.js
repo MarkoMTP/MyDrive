@@ -101,4 +101,8 @@ router.get(
   }
 );
 
+router.get("/folderDeleteError", (req, res) => {
+  res.render("folderDeleteError");
+});
+
 module.exports = router;
