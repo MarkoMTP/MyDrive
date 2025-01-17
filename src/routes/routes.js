@@ -15,6 +15,8 @@ const {
 } = require("../controllers/deleteFolderController");
 const { findFile, findUserEmailWithId } = require("../db/queries");
 const { deleteFileController } = require("../controllers/deleteFileController");
+const loadFileController = require("../controllers/loadFileController");
+const dowloadFileController = require("../controllers/dowloadFileController");
 
 router.get("/", (req, res) => {
   res.render("homepage");
@@ -66,40 +68,11 @@ router.post(
   uploadFileController
 );
 
-router.get("/userPage/:userId/:folderName/:fileId", async (req, res) => {
-  const fileId = Number(req.params.fileId);
-  const { userId, folderName } = req.params;
-
-  const file = await findFile(fileId);
-  res.render("fileInterFace", {
-    file: file,
-    userId: userId,
-    folderName: folderName,
-  });
-});
+router.get("/userPage/:userId/:folderName/:fileId", loadFileController);
 
 router.get(
   "/userPage/:userId/:folderName/:fileId/download",
-  async (req, res) => {
-    const { fileId, userId, folderName } = req.params;
-    const user = await findUserEmailWithId(userId);
-    const file = await findFile(Number(fileId));
-    const path = file.path;
-    console.log(path);
-
-    try {
-      res.download(path, (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send("Download unsuccessful");
-        }
-        console.log("Download successful");
-      });
-    } catch (error) {
-      console.error(error);
-      res.set(500).send("Dowload unsuccessfull");
-    }
-  }
+  dowloadFileController
 );
 
 router.get("/folderDeleteError", (req, res) => {
