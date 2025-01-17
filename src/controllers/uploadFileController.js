@@ -10,7 +10,9 @@ const uploadFileController = async (req, res) => {
     await addNewFileToDir(originalname, size, folder.id, userId, filePath);
     res.redirect(`/userPage/${userId}/${folder.name}`);
   } else {
-    res.status(400).json({ message: "No file uploaded" });
+    return res.status(400).render("noFileUploadedErr", {
+      errorMessage: "No file uploaded. Please select a file to upload.",
+    });
   }
 };
 

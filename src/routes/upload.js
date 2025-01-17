@@ -14,9 +14,8 @@ if (!fs.existsSync(UPLOAD_DIR)) {
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     const { folderName, userId } = req.params;
-    console.log(userId);
+
     const user = await findUserEmailWithId(userId);
-    console.log(user.email);
 
     const pathDir = path.join(UPLOAD_DIR, user.email, folderName);
     cb(null, pathDir); // Save files to the uploads folder
