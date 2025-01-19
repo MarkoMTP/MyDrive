@@ -3,7 +3,6 @@ const router = express.Router();
 const registerController = require("../controllers/registerFormController");
 const { registerValidator } = require("../middleware/validators");
 const passport = require("../authentication/passport");
-const upload = require("./upload");
 
 // controllers
 const viewFormController = require("../controllers/viewFormController");
