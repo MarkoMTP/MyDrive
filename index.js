@@ -37,7 +37,7 @@ app.use(
   })
 );
 
-app.use(fileUpload({ useTempFiles: true }));
+app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 
 app.use(passport.initialize());
 app.use(passport.session());

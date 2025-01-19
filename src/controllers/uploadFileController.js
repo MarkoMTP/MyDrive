@@ -31,7 +31,7 @@ const uploadFileController = async (req, res) => {
       format
     );
 
-    res.status(200).send("File uploaded successfully!");
+    res.redirect(`/userPage/${userId}/${folderName}`);
   } catch (err) {
     console.error(err);
     res.status(500).send("Error uploading file.");

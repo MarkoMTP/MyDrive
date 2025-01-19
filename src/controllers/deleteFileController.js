@@ -1,5 +1,6 @@
 const { findFile, deleteFileFromDb } = require("../db/queries");
 const fs = require("node:fs");
+const cloudinary = require("../../cloudinary");
 
 const deleteFileController = async (req, res) => {
   const { fileId, folderName, fileName } = req.body;
@@ -13,6 +14,13 @@ const deleteFileController = async (req, res) => {
 
   try {
     await deleteFileFromDb(Number(fileId));
+
+    // Delete file from Cloudinary
+    const publicId = file.publicId; // Assuming your DB stores the Cloudinary public_id
+    if (publicId) {
+      await cloudinary.uploader.destroy(publicId);
+      console.log("File deleted from Cloudinary");
+    }
 
     console.log("file deleted");
     res.redirect(`/userPage/${userId}/${folderName}`);
