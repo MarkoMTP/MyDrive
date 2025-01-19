@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const routes = require("./src/routes/routes");
 const path = require("path");
+const fileUpload = require("express-fileupload"); // Middleware to handle file uploads
 
 // Session and Prisma
 const session = require("express-session");
@@ -35,6 +36,8 @@ app.use(
     }),
   })
 );
+
+app.use(fileUpload({ useTempFiles: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());

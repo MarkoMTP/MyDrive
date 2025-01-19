@@ -18,6 +18,7 @@ const { deleteFileController } = require("../controllers/deleteFileController");
 const loadFileController = require("../controllers/loadFileController");
 const dowloadFileController = require("../controllers/dowloadFileController");
 
+//routes
 router.get("/", (req, res) => {
   res.render("homepage");
 });
@@ -62,11 +63,7 @@ router.post("/deleteFolder", deleteFolderController);
 router.get("/userPage/:userId/:folderName", viewFormController);
 
 // Upload route
-router.post(
-  "/userPage/:userId/:folderName",
-  upload.single("file"),
-  uploadFileController
-);
+router.post("/userPage/:userId/:folderName/upload", uploadFileController);
 
 router.get("/userPage/:userId/:folderName/:fileId", loadFileController);
 

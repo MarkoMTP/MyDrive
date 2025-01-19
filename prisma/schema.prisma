@@ -50,13 +50,15 @@ model Folder {
 }
 
 model File {
-  id        Int      @id @default(autoincrement())
-  filename  String   // Original file name
-  path      String   // Path to the file on disk
-  size      Int      // File size in bytes
-  folder    Folder   @relation(fields: [folderId], references: [id])
-  folderId  Int      // Foreign key to Folder
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String      // Foreign key to User (optional but recommended for security)
-  uploadedAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  filename   String   // Original file name (provided by the user)
+  url        String   // Cloud storage URL for accessing the file
+  size       Int      // File size in bytes
+  folder     Folder   @relation(fields: [folderId], references: [id])
+  folderId   Int      // Foreign key to Folder
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   // Foreign key to User (for security and ownership tracking)
+  uploadedAt DateTime @default(now()) // Timestamp of upload
+  publicId   String?  // (Optional) Public ID assigned by the cloud provider
+  format     String?  // (Optional) File format (e.g., jpg, png)
 }
