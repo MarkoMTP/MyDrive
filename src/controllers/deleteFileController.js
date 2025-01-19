@@ -6,7 +6,6 @@ const deleteFileController = async (req, res) => {
   const file = await findFile(Number(fileId));
   const user = req.user;
   const userId = user.id;
-  const filePath = file.path;
 
   if (!file) {
     res.send("File Does Not Exist");

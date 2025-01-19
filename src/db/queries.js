@@ -80,8 +80,8 @@ const addNewFileToDir = async function (
       size: size,
       userId: userId,
       folderId: folderId,
-      secure_url: secure_url,
-      public_id: public_id,
+      url: secure_url,
+      publicId: public_id,
       format: format,
     },
   });
