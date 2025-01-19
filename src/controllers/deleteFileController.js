@@ -14,14 +14,7 @@ const deleteFileController = async (req, res) => {
 
   try {
     await deleteFileFromDb(Number(fileId));
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        console.error(`Error removing file: ${err}`);
-        return;
-      }
 
-      console.log(`File ${filePath} has been successfully removed.`);
-    });
     console.log("file deleted");
     res.redirect(`/userPage/${userId}/${folderName}`);
   } catch (err) {
