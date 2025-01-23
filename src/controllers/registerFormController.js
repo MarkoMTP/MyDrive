@@ -23,15 +23,11 @@ const registerController = async (req, res) => {
     await addUserToDb(email, hashedPassword);
     const user = await findUserEmail(email);
 
-    const userDirPath = path.join(__dirname, "../uploads", email);
-    try {
-      if (!fs.existsSync(userDirPath)) {
-        fs.mkdirSync(userDirPath); // Ensure the directory exists
-        await addFolderToDb(email, user.id); // Add root folder to DB with parentId null
-      }
-    } catch (fsError) {
-      console.error("Error creating user directory:", fsError);
-      return res.status(500).send("Error creating user folder.");
+    if (user) {
+      await addFolderToDb(email, user.id);
+    } else {
+      console.error("Error creating a folder");
+      res.status(400).send("error creating folderr");
     }
 
     res.redirect("/login");
