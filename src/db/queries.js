@@ -72,7 +72,8 @@ const addNewFileToDir = async function (
   userId,
   secure_url,
   public_id,
-  format
+  format,
+  url
 ) {
   await prisma.file.create({
     data: {
@@ -83,6 +84,7 @@ const addNewFileToDir = async function (
       url: secure_url,
       publicId: public_id,
       format: format,
+      url: url,
     },
   });
 };

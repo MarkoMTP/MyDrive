@@ -18,7 +18,9 @@ const uploadFileController = async (req, res) => {
       resource_type: "auto", // Automatically detect file type (image, video, etc.)
     });
 
-    const { secure_url, public_id, format } = result;
+    console.log(result);
+
+    const { secure_url, public_id, format, url } = result;
 
     // Save file metadata to the database
     await addNewFileToDir(
@@ -28,7 +30,8 @@ const uploadFileController = async (req, res) => {
       userId, // User foreign key
       secure_url,
       public_id,
-      format
+      format,
+      url
     );
 
     res.redirect(`/userPage/${userId}/${folderName}`);

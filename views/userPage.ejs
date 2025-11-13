@@ -3,34 +3,251 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/userPage.css" />
-    <title>Folder View</title>
+    <title>User Dashboard</title>
+    <style>
+      /* ===== Global ===== */
+      body {
+        margin: 0;
+        font-family: "Inter", Arial, sans-serif;
+        background-color: #f8f9fb;
+        color: #222;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      h2,
+      h3 {
+        margin: 0;
+      }
+
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      /* ===== Layout ===== */
+      .container {
+        display: flex;
+        width: 100%;
+      }
+
+      /* ===== Sidebar ===== */
+      .sidebar {
+        background: #ffffff;
+        width: 280px;
+        padding: 25px 20px;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 0 12px 12px 0;
+      }
+
+      .sidebar h2 {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 35px;
+        color: #444;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+
+      .sidebar h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      /* ===== Folder List ===== */
+      .folder-list {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 30px;
+      }
+
+      .folder-item {
+        background: #f9fafc;
+        border: 1px solid #e6e8eb;
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.25s ease;
+      }
+
+      .folder-item:hover {
+        background: #eef4ff;
+        border-color: #c6dafc;
+        transform: translateY(-2px);
+      }
+
+      .folder-info h3 {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .viewBtn {
+        background: #0073e6;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .viewBtn:hover {
+        background: #005bb5;
+        transform: translateY(-1px);
+      }
+
+      .delete-btn {
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .delete-btn:hover {
+        background: #d93636;
+        transform: translateY(-1px);
+      }
+
+      /* ===== Logout ===== */
+      .logout-btn {
+        background: #f0f2f5;
+        color: #333;
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        background: #e0e3e8;
+        transform: translateY(-1px);
+      }
+
+      /* ===== Folder View ===== */
+      .folder-view {
+        flex: 1;
+        padding: 50px 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .folder-view h2 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #222;
+      }
+
+      .create-folder {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        width: 100%;
+        max-width: 520px;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+      }
+
+      .create-folder:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+
+      .create-folder form {
+        display: flex;
+        gap: 10px;
+      }
+
+      .create-folder input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.2s ease;
+      }
+
+      .create-folder input:focus {
+        outline: none;
+        border-color: #0073e6;
+      }
+
+      .create-folder button {
+        background: #0073e6;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .create-folder button:hover {
+        background: #005bb5;
+        transform: translateY(-1px);
+      }
+
+      .create-folder p {
+        margin-top: 15px;
+        font-size: 0.95rem;
+        color: #666;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          box-shadow: none;
+          border-bottom: 1px solid #ddd;
+          border-radius: 0;
+        }
+        .folder-view {
+          padding: 25px;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div class="container">
-      <!-- Left Sidebar for Folders -->
+      <!-- ===== Sidebar ===== -->
       <div class="sidebar">
-        <h2>Logged in as: <%= user.email %></h2>
+        <div>
+          <h2>👋 Logged in as: <%= user.email %></h2>
 
-        <h3>Folders</h3>
-        <!-- Folder List -->
-        <div class="folder-list">
-          <% if (folders && folders.length > 0) { folders.forEach((folder)=> {
-          %>
-
-          <div class="folder-item">
-            <div class="folder-info">
-              <h3><%= folder.name %></h3>
-
-              <form
-                action="/userPage/<%= user.id %>/<%= folder.name %>"
-                method="get"
-              >
-                <button type="submit" class="viewBtn">View</button>
-              </form>
-            </div>
-
-            <div class="folder-actions">
+          <h3>Your Folders</h3>
+          <div class="folder-list">
+            <% if (folders && folders.length > 0) { folders.forEach((folder)=> {
+            %>
+            <div class="folder-item">
+              <div class="folder-info">
+                <h3><%= folder.name %></h3>
+                <form
+                  action="/userPage/<%= user.id %>/<%= folder.name %>"
+                  method="get"
+                >
+                  <button type="submit" class="viewBtn">Open</button>
+                </form>
+              </div>
               <form
                 action="/deleteFolder"
                 method="post"
@@ -45,18 +262,22 @@
                 <button type="submit" class="delete-btn">Delete</button>
               </form>
             </div>
+            <% }); %> <% } else { %>
+            <p style="color: #777">
+              No folders yet. Create your first one below 👇
+            </p>
+            <% } %>
           </div>
-          <% }); %> <% } else { %>
-          <p>No folders found</p>
-          <% } %>
         </div>
+
         <form action="/logout" method="POST">
           <button type="submit" class="logout-btn">Logout</button>
         </form>
       </div>
 
+      <!-- ===== Folder View ===== -->
       <div class="folder-view">
-        <h2>Select a folder to view its contents</h2>
+        <h2>📁 Manage your folders</h2>
         <div class="create-folder">
           <form action="/createFolder" method="POST">
             <input
@@ -65,9 +286,9 @@
               placeholder="Enter folder name"
               required
             />
-            <button type="submit">Create Folder</button>
+            <button type="submit">Create</button>
           </form>
-          <div id="folderContent"></div>
+          <p>Organize your uploads easily by creating folders.</p>
         </div>
       </div>
     </div>
